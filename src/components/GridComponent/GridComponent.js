@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 //Components
 import MediaComponent from "./../MediaComponent/MediaComponent";
@@ -26,13 +26,7 @@ const useStyles = makeStyles(theme => ({
     height: "190px"
   },
   loader: {
-    position: "absolute",
-    left: "0",
-    right: "0",
-    top: "50%",
-    MsTransform: "translate(-50%, -50%)",
-    transform: "translatY(-50%, -50%)",
-    margin: "0 auto"
+    margin: theme.spacing(1, 0)
   },
   btn_lm: {
     width: "100%",
@@ -124,6 +118,9 @@ export default memo(function GridComponent(props) {
           index={index}
         />
       )}
+    {loading && (
+            <LinearProgress className={classes.loader} variant="query" color="secondary" />
+    )}
       <Grid className={classes.grid} container spacing={1}>
         {media &&
           media.map((gif, key) => {
@@ -138,11 +135,7 @@ export default memo(function GridComponent(props) {
               </Paper>
             );
           })}
-        {loading && (
-          <Paper className={classes.paper}>
-            <CircularProgress className={classes.loader} disableShrink />
-          </Paper>
-        )}
+
       </Grid>
       <Button
         variant="contained"
@@ -150,6 +143,7 @@ export default memo(function GridComponent(props) {
         onClick={loadMore}
         disableElevation
         className={classes.btn_lm}
+        disabled={loading}
       >
         Load More
       </Button>
